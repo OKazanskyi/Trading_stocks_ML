@@ -21,7 +21,7 @@ if os.name == 'posix':
     os.chdir("/Users/olegkazanskyi/Documents/GitHub/Trading")
 else:
     #Windows
-    os.chdir("C:\\Users\\oleg.kazanskyi\\OneDrive - Danaher\\Documents\\Trading")
+    os.chdir("C:\\Users\\oleg.kazanskyi\\Documents\\Trading")
     
 import Federal_Reserve_Assets
 import crisis_dataset

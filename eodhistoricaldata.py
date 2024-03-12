@@ -22,7 +22,7 @@ if os.name == 'posix':
     os.chdir("/Users/olegkazanskyi/Documents/GitHub/Trading")
 else:
     #Windows
-    os.chdir("C:\\Users\\oleg.kazanskyi\\OneDrive - Danaher\\Documents\\Trading")
+    os.chdir("C:\\Users\\oleg.kazanskyi\\Documents\\Trading")
     
 script_location = os.getcwd()
 
@@ -823,26 +823,6 @@ def multiprocess_run(symbols):
 
 #symbols = ["AAPL"]
         
-if __name__ == '__main__':  
-    
-    #This part checks if the latest available VIX date equal to the last trading date
-    #We need only the latest date to get evaluation by our model
-    if date.today().weekday() == 0:
-        delta = 3
-    else:
-        delta = 1
-        
-    yesterday = date.today() - timedelta(days=delta)
-    if vix_df.index.date.max() != yesterday:
-        send_email()
-    else:
-        '''for stock in symbols[:]:
-            execution(stock)'''
-            
-        mp.freeze_support()
-        __spec__ = None
-        multiprocess_run(symbols)
-
                          
 def dual_axis(df, col1_name, col2_name, col3_name):
     COLOR_1 = "#69b3a2"
@@ -873,9 +853,29 @@ def dual_axis(df, col1_name, col2_name, col3_name):
     fig.autofmt_xdate()
 
 #plotting a sample to see how data performs
-'''df = pd.read_csv("C:\\Users\\oleg.kazanskyi\\OneDrive - Danaher\\Documents\\Trading\\SP500_CSVs_01032023\\AAPL.csv")
+'''df = pd.read_csv("C:\\Users\\oleg.kazanskyi\\Documents\\Trading\\SP500_CSVs_01032023\\AAPL.csv")
 df["date"] = df["date"].apply(pd.to_datetime, errors='coerce')
 df.set_index("date", inplace = True)
 df[["close","Price_SMA200"]].plot()'''
 
 #dual_axis(df.iloc[:-300,:], 'close', 'EPS_1Y_exp_Change')
+
+if __name__ == '__main__':  
+    
+    #This part checks if the latest available VIX date equal to the last trading date
+    #We need only the latest date to get evaluation by our model
+    if date.today().weekday() == 0:
+        delta = 3
+    else:
+        delta = 1
+        
+    yesterday = date.today() - timedelta(days=delta)
+    if vix_df.index.date.max() != yesterday:
+        send_email()
+    else:
+        '''for stock in symbols[:]:
+            execution(stock)'''
+            
+        mp.freeze_support()
+        __spec__ = None
+        multiprocess_run(symbols)

@@ -16,14 +16,14 @@ from datetime import date
 from datetime import timedelta
 import joblib
 
-SET PYTHONPATH = "C:/Users/oleg.kazanskyi/OneDrive - Danaher/Documents/Trading"
+SET PYTHONPATH = "C:/Users/oleg.kazanskyi/Documents/Trading"
 
 if os.name == 'posix':
     #OS
     sys.path.insert(1,"/Users/olegkazanskyi/Documents/GitHub/Trading")
 else:
     #Windows
-    sys.path.insert(1, "C:/Users/oleg.kazanskyi/OneDrive - Danaher/Documents/Trading")
+    sys.path.insert(1, "C:/Users/oleg.kazanskyi/Documents/Trading")
 
 
 # Read all CSVs with stocks data and append to one big file
@@ -36,8 +36,8 @@ def get_latest_data():
         os.chdir("/Users/olegkazanskyi/Documents/GitHub/Trading/SP500_CSVs_01032023")
     else:
         #Windows
-        os.chdir("C:\\Users\\oleg.kazanskyi\\OneDrive - Danaher\\Documents\\Trading\\SP500_CSVs_01032023")
-
+        os.chdir("C:\\Users\\oleg.kazanskyi\\Documents\\Trading\\SP500_CSVs_01032023")
+        
     filepaths = [f for f in os.listdir("./") if f.endswith('.csv')]
     df = pd.DataFrame()
     for i in filepaths:
@@ -144,19 +144,19 @@ def ML_classification(df_input, stocks, period = '30'):
         model_path = f"/Users/olegkazanskyi/Documents/GitHub/Trading/Models/{period}d_model.joblib"
     else:
         #Windows
-        model_path = f"C:/Users/oleg.kazanskyi/OneDrive - Danaher/Documents/Trading/Models/{period}d_model.joblib"
-        
+        model_path = f"C:/Users/oleg.kazanskyi/Documents/Trading/Models/{period}d_model.joblib"
+    #ddrt
     lgbm = joblib.load(open(model_path, 'rb'))
-
+    
     if os.name == 'posix':
         #OS
         label_encoder_path = f"/Users/olegkazanskyi/Documents/GitHub/Trading/Models/label_encoder_012023.joblib"
     else:
         #Windows
-        label_encoder_path = "C:/Users/oleg.kazanskyi/OneDrive - Danaher/Documents/Trading/Models/label_encoder_012023.joblib"   
+        label_encoder_path = "C:/Users/oleg.kazanskyi/Documents/Trading/Models/label_encoder_012023.joblib"   
     
     le = joblib.load(open(label_encoder_path, 'rb'))
-
+    
     df["sector"] = le.transform(df["sector"])
     
     #predicting on test set
@@ -250,8 +250,8 @@ def relearn_model(period = '30'):
         model_path = f"/Users/olegkazanskyi/Documents/GitHub/Trading/Models/{period}d_model.joblib"
     else:
         #Windows
-        os.chdir("C:\\Users\\oleg.kazanskyi\\OneDrive - Danaher\\Documents\\Trading")
-        model_path = f"C:/Users/oleg.kazanskyi/OneDrive - Danaher/Documents/Trading/Models/{period}d_model.joblib"
+        os.chdir("C:\\Users\\oleg.kazanskyi\\Documents\\Trading")
+        model_path = f"C:/Users/oleg.kazanskyi/Documents/Trading/Models/{period}d_model.joblib"
     
     last_mod_time = datetime.datetime.fromtimestamp(os.path.getctime(model_path) ).date()
     delta = date.today() - last_mod_time
